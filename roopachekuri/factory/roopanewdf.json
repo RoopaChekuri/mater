@@ -1,0 +1,9 @@
+{
+	"name": "roopanewdf",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "5b75e41a-9480-4197-addc-cc7433d2bdbd",
+		"tenantId": "2a42b514-4b08-4976-a27b-8bc6d627fc72"
+	}
+}

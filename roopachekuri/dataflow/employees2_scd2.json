@@ -1,0 +1,174 @@
+{
+	"name": "employees2_scd2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "employees_scd2",
+						"type": "DatasetReference"
+					},
+					"name": "targetdata"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "employees_scd2",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "employees_scd2",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "lookup1"
+				},
+				{
+					"name": "insert"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "update"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "select3"
+				},
+				{
+					"name": "alterRow1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          EmployeeID as integer,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          Department as string,",
+				"          Title as string,",
+				"          Location as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source(output(",
+				"          EmployeeID as integer,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          Department as string,",
+				"          Title as string,",
+				"          Location as string,",
+				"          active_flag as integer",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> targetdata",
+				"targetdata select(mapColumn(",
+				"          EmployeeID_tgt = EmployeeID,",
+				"          FirstName_tgt = FirstName,",
+				"          LastName_tgt = LastName,",
+				"          Department_tgt = Department,",
+				"          Title_tgt = Title,",
+				"          Location_tgt = Location,",
+				"          active_flag_tgt = active_flag",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"source1, targetdata lookup(source1@EmployeeID == targetdata@EmployeeID,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup1",
+				"lookup1 filter(isNull(targetdata@EmployeeID) || (source1@FirstName!=targetdata@FirstName ) || (source1@LastName != targetdata@LastName) || (source1@Location != targetdata@Location) || (source1@Title != targetdata@Title)) ~> insert",
+				"insert derive(active_flag = 1) ~> derivedColumn1",
+				"derivedColumn1 select(mapColumn(",
+				"          EmployeeID = source1@EmployeeID,",
+				"          FirstName = source1@FirstName,",
+				"          LastName = source1@LastName,",
+				"          Department = source1@Department,",
+				"          Title = source1@Title,",
+				"          Location = source1@Location,",
+				"          active_flag",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"lookup1 filter((!isNull(targetdata@EmployeeID)) && (source1@FirstName !=targetdata@FirstName) ||(source1@LastName !=targetdata@LastName) || (source1@Department !=targetdata@Department) ||(source1@Location != targetdata@Location) ||(source1@Title != targetdata@Title)) ~> update",
+				"update derive(active_flag = 0) ~> derivedColumn2",
+				"derivedColumn2 select(mapColumn(",
+				"          EmployeeID = targetdata@EmployeeID,",
+				"          FirstName = targetdata@FirstName,",
+				"          LastName = targetdata@LastName,",
+				"          Department = targetdata@Department,",
+				"          Title = targetdata@Title,",
+				"          Location = targetdata@Location,",
+				"          active_flag",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select3",
+				"select3 alterRow(updateIf(1==1)) ~> alterRow1",
+				"select2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          EmployeeID as integer,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          Department as string,",
+				"          Title as string,",
+				"          Location as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
+				"alterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          EmployeeID as integer,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          Department as string,",
+				"          Title as string,",
+				"          Location as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:true,",
+				"     upsertable:false,",
+				"     keys:['EmployeeID','FirstName','LastName','Department','Location','Title'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink2"
+			]
+		}
+	}
+}
