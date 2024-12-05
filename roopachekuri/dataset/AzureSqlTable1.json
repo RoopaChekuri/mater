@@ -35,8 +35,8 @@
 			}
 		],
 		"typeProperties": {
-			"schema": "dbo",
-			"table": "dim_employees"
+			"schema": "SalesLT",
+			"table": "Address"
 		}
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"
