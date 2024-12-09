@@ -1,0 +1,36 @@
+{
+	"name": "pivote_ds",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_LS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "product_table.csv",
+				"fileSystem": "newassignment"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "customer_id",
+				"type": "String"
+			},
+			{
+				"name": "product_name",
+				"type": "String"
+			},
+			{
+				"name": "sales",
+				"type": "String"
+			}
+		]
+	}
+}
