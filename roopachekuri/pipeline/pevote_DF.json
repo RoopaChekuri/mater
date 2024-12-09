@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "Pivote_DF",
+						"referenceName": "Pivote_DF_design",
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"sink1": {
