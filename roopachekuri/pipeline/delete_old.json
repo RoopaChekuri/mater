@@ -68,7 +68,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataset": {
-									"referenceName": "Binary1",
+									"referenceName": "roopa_file_delete",
 									"type": "DatasetReference",
 									"parameters": {
 										"filename": {
@@ -86,7 +86,7 @@
 								},
 								"enableLogging": true,
 								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
+									"type": "AzureBlobStorageReadSettings",
 									"recursive": true,
 									"enablePartitionDiscovery": false
 								}

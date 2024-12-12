@@ -1,0 +1,23 @@
+{
+	"name": "roopa_file_delete",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStoragefile",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "Roopa",
+				"container": "newraw"
+			}
+		}
+	}
+}
