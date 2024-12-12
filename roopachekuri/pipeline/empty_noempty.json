@@ -24,6 +24,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -78,6 +79,7 @@
 								],
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
@@ -99,7 +101,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@equals(length(activity('Get Metadata2').output.childItems),0)",
+									"value": "@empty(activity('Get Metadata2').output.childItems)",
 									"type": "Expression"
 								},
 								"ifFalseActivities": [
