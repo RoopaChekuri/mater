@@ -86,8 +86,8 @@
 							}
 						},
 						{
-							"name": "Get Metadata3",
-							"type": "GetMetadata",
+							"name": "If Condition1",
+							"type": "IfCondition",
 							"dependsOn": [
 								{
 									"activity": "Get Metadata2",
@@ -96,35 +96,42 @@
 									]
 								}
 							],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
 							"userProperties": [],
 							"typeProperties": {
-								"dataset": {
-									"referenceName": "empt_perm",
-									"type": "DatasetReference",
-									"parameters": {
-										"foldername": {
-											"value": "@item().name",
-											"type": "Expression"
+								"expression": {
+									"value": "@empty(activity('Get Metadata2').output.childItems)",
+									"type": "Expression"
+								},
+								"ifFalseActivities": [
+									{
+										"name": "Append variable2",
+										"type": "AppendVariable",
+										"dependsOn": [],
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "nonempty",
+											"value": {
+												"value": "@item().name",
+												"type": "Expression"
+											}
 										}
 									}
-								},
-								"fieldList": [
-									"childItems"
 								],
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
+								"ifTrueActivities": [
+									{
+										"name": "Append variable1",
+										"type": "AppendVariable",
+										"dependsOn": [],
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "empty",
+											"value": {
+												"value": "@item().name",
+												"type": "Expression"
+											}
+										}
+									}
+								]
 							}
 						}
 					]
