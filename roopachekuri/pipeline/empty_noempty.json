@@ -99,7 +99,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@empty(activity('Get Metadata2').output.childItems)",
+									"value": "@empty(activity('Get Metadata2').output.itemType)",
 									"type": "Expression"
 								},
 								"ifFalseActivities": [
