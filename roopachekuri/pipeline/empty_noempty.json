@@ -296,6 +296,12 @@
 			},
 			"nonempty": {
 				"type": "Array"
+			},
+			"set_variable_empty": {
+				"type": "Array"
+			},
+			"set_var_nonempty": {
+				"type": "Array"
 			}
 		},
 		"annotations": []
