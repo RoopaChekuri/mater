@@ -161,11 +161,25 @@
 				"typeProperties": {
 					"source": {
 						"type": "DelimitedTextSource",
+						"additionalColumns": [
+							{
+								"name": "empty",
+								"value": {
+									"value": "@variables('empty')",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "non_empty",
+								"value": {
+									"value": "@variables('nonempty')",
+									"type": "Expression"
+								}
+							}
+						],
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
-							"wildcardFolderPath": "@i",
-							"wildcardFileName": "dummt.csv",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
