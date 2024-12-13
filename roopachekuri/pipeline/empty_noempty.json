@@ -356,6 +356,8 @@
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
+							"wildcardFolderPath": "@i",
+							"wildcardFileName": "dummt.csv",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -385,7 +387,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "dummy_emty_nonempty",
+						"referenceName": "dummy2",
 						"type": "DatasetReference"
 					}
 				],
