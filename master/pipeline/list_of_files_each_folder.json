@@ -130,7 +130,7 @@
 								"source": {
 									"type": "AzureSqlSource",
 									"sqlReaderQuery": {
-										"value": "insert into dbo.count_files select'@{item().name}',@{activity('Filter1').output.ItemsCount}",
+										"value": "insert into dbo.count_files select'@{item().name}',@{activity('Filter1').output.ItemsCount}; select 1 as output",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00",
