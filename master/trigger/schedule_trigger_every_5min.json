@@ -1,0 +1,17 @@
+{
+	"name": "schedule_trigger_every_5min",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 5,
+				"startTime": "2024-11-14T15:21:00",
+				"timeZone": "Central Standard Time"
+			}
+		}
+	}
+}

@@ -1,0 +1,91 @@
+{
+	"name": "copy_cust",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "generic_ds_file",
+						"type": "DatasetReference",
+						"parameters": {
+							"rootfile": {
+								"value": "@pipeline().parameters.root",
+								"type": "Expression"
+							},
+							"file": {
+								"value": "@pipeline().parameters.file",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Generic_ds",
+						"type": "DatasetReference",
+						"parameters": {
+							"folderpath": "customer_perm"
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"root": {
+				"type": "string",
+				"defaultValue": "newraw/Customer"
+			},
+			"file": {
+				"type": "string",
+				"defaultValue": "customer"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-11-21T16:35:36Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

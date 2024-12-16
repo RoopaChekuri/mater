@@ -1,0 +1,17 @@
+{
+	"name": "truggerfor_every12hrs",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 12,
+				"startTime": "2024-11-25T17:34:00",
+				"timeZone": "Central Standard Time"
+			}
+		}
+	}
+}

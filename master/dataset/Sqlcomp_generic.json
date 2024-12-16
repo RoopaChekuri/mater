@@ -1,0 +1,25 @@
+{
+	"name": "Sqlcomp_generic",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "mycomp_sqlconn",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"table": {
+				"type": "string"
+			},
+			"schema": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Products"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

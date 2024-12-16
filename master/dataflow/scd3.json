@@ -1,0 +1,144 @@
+{
+	"name": "scd3",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "scd3",
+						"type": "DatasetReference"
+					},
+					"name": "targetdata"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "scd3",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "scd3",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "lookup1"
+				},
+				{
+					"name": "insert"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "update"
+				},
+				{
+					"name": "alterRow1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          EmployeeID as integer,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          Department as string,",
+				"          Title as string,",
+				"          Location as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source(output(",
+				"          EmployeeID as integer,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          CurrentDepartment as string,",
+				"          PreviousDepartment as string,",
+				"          Title as string,",
+				"          Location as string",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> targetdata",
+				"targetdata select(skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"source1, targetdata lookup(source1@EmployeeID == targetdata@EmployeeID,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup1",
+				"lookup1 filter(isNull(targetdata@EmployeeID) || (source1@FirstName!=targetdata@FirstName ) || (source1@LastName != targetdata@LastName) || (source1@Location != targetdata@Location) || (source1@Title != targetdata@Title)|| (Department!=CurrentDepartment)) ~> insert",
+				"insert select(mapColumn(",
+				"          EmployeeID = source1@EmployeeID,",
+				"          FirstName = source1@FirstName,",
+				"          LastName = source1@LastName,",
+				"          Department,",
+				"          Title = source1@Title,",
+				"          Location = source1@Location",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"lookup1 filter((!isNull(targetdata@EmployeeID)) && (Department !=CurrentDepartment)) ~> update",
+				"update alterRow(updateIf(1==1)) ~> alterRow1",
+				"select2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          EmployeeID as integer,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          CurrentDepartment as string,",
+				"          PreviousDepartment as string,",
+				"          Title as string,",
+				"          Location as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
+				"alterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          EmployeeID as integer,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          CurrentDepartment as string,",
+				"          PreviousDepartment as string,",
+				"          Title as string,",
+				"          Location as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:true,",
+				"     upsertable:false,",
+				"     keys:['EmployeeID','FirstName','LastName','Department','Location','Title'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink2"
+			]
+		}
+	}
+}

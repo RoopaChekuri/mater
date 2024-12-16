@@ -1,0 +1,13 @@
+{
+	"name": "ass_rest",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Restassignement",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

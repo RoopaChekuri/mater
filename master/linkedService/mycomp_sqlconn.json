@@ -1,0 +1,21 @@
+{
+	"name": "mycomp_sqlconn",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"server": "Karthik\\SQLEXPRESS",
+			"database": "Test_Db",
+			"encrypt": "mandatory",
+			"trustServerCertificate": true,
+			"authenticationType": "SQL",
+			"userName": "admin2024",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIyOTZiMzIxMS1lYjNlLTRmOWYtYTNkMS02YmY2MWRiYmQzYWYiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "MyazureselfhosterIR",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
