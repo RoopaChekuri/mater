@@ -63,8 +63,14 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataset": {
-									"referenceName": "list_files_check",
-									"type": "DatasetReference"
+									"referenceName": "file_list_check",
+									"type": "DatasetReference",
+									"parameters": {
+										"foldername": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
 								},
 								"fieldList": [
 									"childItems"
