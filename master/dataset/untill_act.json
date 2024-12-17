@@ -11,8 +11,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": "CustomerAddress",
-				"folderPath": "CustomerAddress",
-				"fileSystem": "newraw"
+				"fileSystem": "emptycontainer"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
