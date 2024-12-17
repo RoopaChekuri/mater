@@ -116,7 +116,7 @@
 									"referenceName": "Generic_ds",
 									"type": "DatasetReference",
 									"parameters": {
-										"folderpath": "wait_for_file"
+										"folderpath": "wait_for_file1"
 									}
 								}
 							]
