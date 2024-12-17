@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "CustomerAddress",
+				"fileName": "employee_tgt.txt",
 				"fileSystem": "emptycontainer"
 			},
 			"columnDelimiter": ",",
