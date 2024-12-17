@@ -1,0 +1,38 @@
+{
+	"name": "stored_proc_pp",
+	"properties": {
+		"activities": [
+			{
+				"name": "Stored procedure1",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SP_TOTAL_SALARY]",
+					"storedProcedureParameters": {
+						"in_emp_id": {
+							"value": "",
+							"type": "Int32"
+						},
+						"o_sal": {
+							"value": "",
+							"type": "Double"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "SQL_DB_LS",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
