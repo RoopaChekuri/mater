@@ -141,7 +141,7 @@
 						"type": "DatasetReference"
 					},
 					"fieldList": [
-						"exists"
+						"structure"
 					],
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
