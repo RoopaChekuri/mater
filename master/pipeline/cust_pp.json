@@ -53,8 +53,11 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "cust_ds",
-						"type": "DatasetReference"
+						"referenceName": "Generic_ds",
+						"type": "DatasetReference",
+						"parameters": {
+							"folderpath": "Customer"
+						}
 					}
 				]
 			}
