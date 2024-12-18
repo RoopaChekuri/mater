@@ -5,18 +5,11 @@
 			"referenceName": "ADLS_LS",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"filename": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "Customer",
-				"folderPath": "Customer",
 				"fileSystem": "newraw"
 			},
 			"columnDelimiter": ",",
