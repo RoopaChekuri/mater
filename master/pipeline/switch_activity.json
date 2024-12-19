@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Switch1",
-				"type": "Switch",
+				"name": "If Condition1",
+				"type": "IfCondition",
 				"dependsOn": [
 					{
 						"activity": "Lookup1",
@@ -15,31 +15,45 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
-					"on": {
-						"value": "@activity('Lookup1').output",
+					"expression": {
+						"value": "@activity('Lookup1').output.value",
 						"type": "Expression"
 					},
-					"cases": [
+					"ifTrueActivities": [
 						{
-							"value": "Case1",
-							"activities": [
-								{
-									"name": "Filter1",
-									"type": "Filter",
-									"dependsOn": [],
-									"userProperties": [],
-									"typeProperties": {
-										"items": {
-											"value": "@activity('Lookup1').output",
-											"type": "Expression"
-										},
-										"condition": {
-											"value": "@item().value",
-											"type": "Expression"
-										}
+							"name": "Switch1",
+							"type": "Switch",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"on": {
+									"value": "@activity('Lookup1').output",
+									"type": "Expression"
+								},
+								"cases": [
+									{
+										"value": "Case1",
+										"activities": [
+											{
+												"name": "Filter1",
+												"type": "Filter",
+												"dependsOn": [],
+												"userProperties": [],
+												"typeProperties": {
+													"items": {
+														"value": "@activity('Lookup1').output",
+														"type": "Expression"
+													},
+													"condition": {
+														"value": "@item().value",
+														"type": "Expression"
+													}
+												}
+											}
+										]
 									}
-								}
-							]
+								]
+							}
 						}
 					]
 				}
