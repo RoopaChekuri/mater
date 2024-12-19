@@ -117,79 +117,15 @@
 												"referenceName": "roopa_cust",
 												"type": "DatasetReference"
 											},
-											"firstRowOnly": false
+											"firstRowOnly": true
 										}
-									},
-									{
-										"name": "Copy data1",
-										"type": "Copy",
-										"dependsOn": [
-											{
-												"activity": "Lookup1",
-												"dependencyConditions": [
-													"Succeeded"
-												]
-											}
-										],
-										"policy": {
-											"timeout": "0.12:00:00",
-											"retry": 0,
-											"retryIntervalInSeconds": 30,
-											"secureOutput": false,
-											"secureInput": false
-										},
-										"userProperties": [],
-										"typeProperties": {
-											"source": {
-												"type": "DelimitedTextSource",
-												"storeSettings": {
-													"type": "AzureBlobFSReadSettings",
-													"recursive": true,
-													"wildcardFileName": "*.txt",
-													"enablePartitionDiscovery": false
-												},
-												"formatSettings": {
-													"type": "DelimitedTextReadSettings"
-												}
-											},
-											"sink": {
-												"type": "AzureSqlSink",
-												"writeBehavior": "insert",
-												"sqlWriterUseTableLock": false
-											},
-											"enableStaging": false,
-											"translator": {
-												"type": "TabularTranslator",
-												"typeConversion": true,
-												"typeConversionSettings": {
-													"allowDataTruncation": true,
-													"treatBooleanAsNumber": false
-												}
-											}
-										},
-										"inputs": [
-											{
-												"referenceName": "roopa_cust",
-												"type": "DatasetReference"
-											}
-										],
-										"outputs": [
-											{
-												"referenceName": "generic_ds_sql",
-												"type": "DatasetReference",
-												"parameters": {
-													"schemaperm": "dbo",
-													"tableperm": "Cust_table"
-												}
-											}
-										]
 									},
 									{
 										"name": "Stored procedure1",
 										"type": "SqlServerStoredProcedure",
 										"dependsOn": [
 											{
-												"activity": "Copy data1",
+												"activity": "Lookup1",
 												"dependencyConditions": [
 													"Succeeded"
 												]
@@ -208,13 +144,16 @@
 											"storedProcedureParameters": {
 												"cust_fname": {
 													"value": {
-														"value": "@activity('Lookup1').output",
+														"value": "@activity('Lookup1').output.firstRow.cust_fname",
 														"type": "Expression"
 													},
 													"type": "String"
 												},
 												"cust_lname": {
-													"value": "",
+													"value": {
+														"value": "@activity('Lookup1').output.firstRow.cust_lname",
+														"type": "Expression"
+													},
 													"type": "String"
 												}
 											}
