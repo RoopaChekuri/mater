@@ -80,6 +80,85 @@
 												"type": "Expression"
 											}
 										}
+									},
+									{
+										"name": "Lookup1",
+										"type": "Lookup",
+										"dependsOn": [
+											{
+												"activity": "Set variable2",
+												"dependencyConditions": [
+													"Succeeded"
+												]
+											}
+										],
+										"policy": {
+											"timeout": "0.12:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "DelimitedTextSource",
+												"storeSettings": {
+													"type": "AzureBlobFSReadSettings",
+													"recursive": true,
+													"wildcardFileName": "*.txt",
+													"enablePartitionDiscovery": false
+												},
+												"formatSettings": {
+													"type": "DelimitedTextReadSettings"
+												}
+											},
+											"dataset": {
+												"referenceName": "roopa_cust",
+												"type": "DatasetReference"
+											},
+											"firstRowOnly": false
+										}
+									},
+									{
+										"name": "Stored procedure1",
+										"type": "SqlServerStoredProcedure",
+										"dependsOn": [
+											{
+												"activity": "Lookup1",
+												"dependencyConditions": [
+													"Succeeded"
+												]
+											}
+										],
+										"policy": {
+											"timeout": "0.12:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"storedProcedureName": "[dbo].[DeleteCustomer]",
+											"storedProcedureParameters": {
+												"cust_fname": {
+													"value": {
+														"value": "@activity('Lookup1').output",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"cust_lname": {
+													"value": "",
+													"type": "String"
+												}
+											}
+										},
+										"linkedServiceName": {
+											"referenceName": "SQL_DB_LS",
+											"type": "LinkedServiceReference"
+										}
 									}
 								]
 							}
