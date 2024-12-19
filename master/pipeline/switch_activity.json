@@ -24,7 +24,7 @@
 							"value": "Case1",
 							"activities": [
 								{
-									"name": "Filter1_copy1",
+									"name": "Filter1",
 									"type": "Filter",
 									"dependsOn": [],
 									"userProperties": [],
@@ -34,30 +34,12 @@
 											"type": "Expression"
 										},
 										"condition": {
-											"value": "@greater(item().SALARY,1000 )",
+											"value": "@item().value",
 											"type": "Expression"
 										}
 									}
 								}
 							]
-						}
-					],
-					"defaultActivities": [
-						{
-							"name": "Filter1",
-							"type": "Filter",
-							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"items": {
-									"value": "@activity('Lookup1').output",
-									"type": "Expression"
-								},
-								"condition": {
-									"value": "@greater(item().SALARY,1000 )",
-									"type": "Expression"
-								}
-							}
 						}
 					]
 				}
